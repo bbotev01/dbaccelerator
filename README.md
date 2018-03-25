@@ -32,7 +32,7 @@ docker run -it --rm --name redshift_acc -p 5432:5432 -e TARGET_HOSTNAME=testclus
 ```
 Now we just need to connect with __psql__ to the container we deployed. In my case it's running on __localhost__. We'll also turn timing to see the difference in execution query times.
 ```sh
-~$ psql -h localhost -p 5432 -U postgres -d test 
+$ psql -h localhost -p 5432 -U postgres -d test 
 Password for user postgres: 
 psql (10.3, server 8.0.2)
 Type "help" for help.

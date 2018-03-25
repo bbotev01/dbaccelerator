@@ -21,14 +21,18 @@ There are 3 environment variables you need to provide at runtime to the docker r
 
 #### Example:
 ```sh
-docker run -it --rm --name redshift_acc -p 5432:5432 -e TARGET_HOSTNAME=testcluster.cuzu3peepxrr.us-east-1.redshift.amazonaws.com -e TARGET_PORT=5439 -e USER=postgres -e PASS=SuperSecret123 dbaccelerator
+docker run -it --rm --name redshift_acc -p 5432:5432 \
+-e TARGET_HOSTNAME=testcluster.cuzu3peepxrr.us-east-1.redshift.amazonaws.com \
+-e TARGET_PORT=5439 -e USER=postgres -e PASS=SuperSecret123 dbaccelerator
 ```
 What does the above command do? It starts a container named __redshift_acc__ using the image __dbaccelerator__. We open port 5432 on the docker host and map it to pgpool's port 5432 inside the container via __-p 5432:5432__. We pass the hostname of the cluster we want to connect to by assigning the hostname to the __TARGET_HOSTNAME__ environment variable. By assigning 5439 to __TARGET_PORT__ we tell the container that we want PgPool to use that specific port to connect to our MPP cluster. We also pass the database user and password in the __USER__ and __PASS__ variables respectively.
 
 ### Redshift Example:
 Start the container using the variables for the Redshift cluster
 ```sh
-docker run -it --rm --name redshift_acc -p 5432:5432 -e TARGET_HOSTNAME=testcluster.cuzu3peepxrr.us-east-1.redshift.amazonaws.com -e TARGET_PORT=5439 -e USER=postgres -e PASS=SuperSecret123 dbaccelerator
+docker run -it --rm --name redshift_acc -p 5432:5432 \
+-e TARGET_HOSTNAME=testcluster.cuzu3peepxrr.us-east-1.redshift.amazonaws.com \
+-e TARGET_PORT=5439 -e USER=postgres -e PASS=SuperSecret123 dbaccelerator
 ```
 Now we just need to connect with __psql__ to the container we deployed. In my case it's running on __localhost__. We'll also turn timing to see the difference in execution query times.
 ```sh
@@ -73,7 +77,9 @@ When a query hits the result cache, you'll see the following message in the PgPo
 ### Greenplum Example:
 Start the container using the variables for the Greenplum cluster
 ```sh
-docker run -it --rm --name greenplum_acc -p 5433:5432 -e TARGET_HOSTNAME=192.168.1.14 -e TARGET_PORT=5432 -e USER=gpadmin -e PASS=greenplum dbaccelerator
+docker run -it --rm --name greenplum_acc -p 5433:5432 \
+-e TARGET_HOSTNAME=192.168.1.14 -e TARGET_PORT=5432 \ 
+-e USER=gpadmin -e PASS=greenplum dbaccelerator
 ```
 Since I had Greenplum running locally in a container exposed on port 5432 on the host, I had to use a different port i.e. 5433 for the PgPool container. 
 ```
